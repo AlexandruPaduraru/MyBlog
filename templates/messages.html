@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title> miniBlog - Messages</title>
+    </head>
+    
+    <body>
+        <h1 style="text-decoration:underline; color:#a05">Messages</h1>
+        <br />
+        
+        <!--formular pentru introducerea unui nou mesaj-->
+        {% if not author_exists %}
+            <p style="color:#F00; font-size:12px">You must write your name.</p>
+        {% endif %}
+        
+        {% if not message_exists %}
+            <p style="color:#F00; font-size:12px">Please, write the message!</p>
+        {% endif %}
+        
+        <br />
+        <form method="POST" name="new_message_form">
+        {% csrf_token %}
+        <table><tr> <td>Your Name</td><td><input type="text", name="author">
+                    </td>
+               </tr>
+               <tr> <td>Your message</td><td><textarea rows="2" cols="23" name="message"></textarea></td>
+               </tr> 
+               <tr> <td colspan="2" align="right"> <input type="submit", value="Post Message">
+                    </td>
+               </tr>
+        </table>
+        </form>
+        
+        <!--lista mesajelor scrise-->
+        <h4 style="color:#05F">List of messages</h4>
+        {% if message_list %}
+        {% for msg in message_list %}
+            <div style="padding:0px; width:600px; min-high:40px; border-bottom:#300 solid; border-right:#300 solid; margin-bottom:25px">
+                <table width="600"><tr><td style="color:#005;">{{ msg.author }}</td><td align="right" style="color:#500;">{{msg.date}}</td></tr></table>
+                <hr width="50%" align="left"/>
+                <p style="padding:5px">{{msg.message}}</p>
+            </div>
+        {% endfor %}
+        {% else %}
+            <p style="color:#A00">There are no messages</p>
+        {% endif %}
+        
+    </body>
+
+</html>
